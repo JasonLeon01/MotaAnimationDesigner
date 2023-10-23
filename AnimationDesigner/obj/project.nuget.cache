@@ -1,8 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "qV//kC2UidVn1ZDQ1pO0P6Ctj7BemV8YLy4J04IgdFkBbuM1BCPBW1btHBPQrE6cm4tHJzatOZruLTYwf95IeQ==",
+  "dgSpecHash": "HLI9HarserytG5pPeRJLFfWkBEKE1Khf0HExwKjSHWHfKirmX6dwjGUtwxGqBwzRl3FiQSPpvwQMgrFyChJpDA==",
   "success": true,
-  "projectFilePath": "E:\\AnimationDesigner\\AnimationDesigner\\AnimationDesigner.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "E:\\Github Projects\\MotaAnimationDesigner\\AnimationDesigner\\AnimationDesigner.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio\\2.2.1\\naudio.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.asio\\2.2.1\\naudio.asio.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.core\\2.2.1\\naudio.core.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.midi\\2.2.1\\naudio.midi.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.wasapi\\2.2.1\\naudio.wasapi.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.winforms\\2.2.1\\naudio.winforms.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\naudio.winmm\\2.2.1\\naudio.winmm.2.2.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
