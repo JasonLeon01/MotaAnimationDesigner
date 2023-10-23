@@ -24,3 +24,5 @@ E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Debug\net6.0-wind
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Debug\net6.0-windows\NAudio.WinMM.dll
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Debug\net6.0-windows\AnimationDesigner.csproj.AssemblyReference.cache
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Debug\net6.0-windows\AnimationDesigner.csproj.CopyComplete
+E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Debug\net6.0-windows\NAudio.Vorbis.dll
+E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Debug\net6.0-windows\NVorbis.dll

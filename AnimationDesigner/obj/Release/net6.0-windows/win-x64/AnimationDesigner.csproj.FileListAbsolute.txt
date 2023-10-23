@@ -24,3 +24,5 @@ E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Release\net6.0-wi
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Release\net6.0-windows\win-x64\AnimationDesigner.pdb
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Release\net6.0-windows\win-x64\AnimationDesigner.genruntimeconfig.cache
 E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\obj\Release\net6.0-windows\win-x64\ref\AnimationDesigner.dll
+E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Release\net6.0-windows\win-x64\NAudio.Vorbis.dll
+E:\Github Projects\MotaAnimationDesigner\AnimationDesigner\bin\Release\net6.0-windows\win-x64\NVorbis.dll

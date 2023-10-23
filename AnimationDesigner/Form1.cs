@@ -222,23 +222,34 @@ namespace AnimationDesigner
         private async void button4_Click(object sender, EventArgs e)
         {
             bool banned = false;
+            string path = Application.StartupPath + @"sound/" + anime[listBox1.SelectedIndex].SEFile;
+            IWavePlayer waveOutDevice = new WaveOut();
+            WaveStream readerStream = null;
             if (anime[listBox1.SelectedIndex].SEFile.Split('.')[1] == "ogg")
             {
+                readerStream = new NAudio.Vorbis.VorbisWaveReader(path);
+                waveOutDevice.Init(readerStream);
+            }
+            else if (anime[listBox1.SelectedIndex].SEFile.Split('.')[1] == "wav")
+            {
+                readerStream = new WaveFileReader(path);
+                waveOutDevice.Init(readerStream);
+
+            }
+            else
+            {
                 banned = true;
-                MessageBox.Show("抱歉，C#并不支持ogg文件的播放，本次播放只能静音");
+                MessageBox.Show("抱歉，C#暂不支持该类型文件的播放，本次播放只能静音");
             }
             for (int i = 0; i < anime[listBox1.SelectedIndex].animationPatterns.Count; ++i)
             {
                 drawAnimation(i);
                 if (i == anime[listBox1.SelectedIndex].SETime && !banned)
-                {
-                    var audioFile = new AudioFileReader(Application.StartupPath + @"sound/" + anime[listBox1.SelectedIndex].SEFile);
-                    var outputDevice = new WaveOutEvent();
-                    outputDevice.Init(audioFile);
-                    outputDevice.Play();
-                }
+                    waveOutDevice.Play();
                 await Task.Delay(64);
             }
+            waveOutDevice.Dispose();
+            readerStream.Dispose();
             drawAnimation(listBox2.SelectedIndex);
         }
 
