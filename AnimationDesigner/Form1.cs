@@ -126,6 +126,7 @@ namespace AnimationDesigner
             foreach (string str in anime[listBox1.SelectedIndex].animationPatterns)
                 listBox2.Items.Add(str);
             listBox2.SelectedIndex = 0;
+            list2Index = 0;
             drawAnimation(listBox2.SelectedIndex);
         }
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
