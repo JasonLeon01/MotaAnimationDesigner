@@ -46,7 +46,7 @@ namespace AnimationDesigner
         }
         private void drawAnimation(int nowid)
         {
-            if (anime[listBox1.SelectedIndex].animationPatterns.Count > 0 && listBox2.SelectedIndex != -1 && nowid != -1 && anime[listBox1.SelectedIndex].animationPatterns[nowid] != "blank")
+            if (anime[listBox1.SelectedIndex].animationPatterns[nowid] != "blank")
             {
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
@@ -75,10 +75,7 @@ namespace AnimationDesigner
             listBox2.Items.Clear();
             foreach (string str in anime[listBox1.SelectedIndex].animationPatterns)
                 listBox2.Items.Add(str);
-            if (anime[listBox1.SelectedIndex].animationPatterns.Count > 0)
-                listBox2.SelectedIndex = list2Index;
-            else
-                listBox2.ClearSelected();
+            listBox2.SelectedIndex = list2Index;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -128,10 +125,7 @@ namespace AnimationDesigner
             listBox2.Items.Clear();
             foreach (string str in anime[listBox1.SelectedIndex].animationPatterns)
                 listBox2.Items.Add(str);
-            if (anime[listBox1.SelectedIndex].animationPatterns.Count > 0)
-                listBox2.SelectedIndex = 0;
-            else
-                listBox2.ClearSelected();
+            listBox2.SelectedIndex = 0;
             drawAnimation(listBox2.SelectedIndex);
         }
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -169,9 +163,9 @@ namespace AnimationDesigner
         }
         private void button7_Click(object sender, EventArgs e)
         {
-            if (anime[listBox1.SelectedIndex].animationPatterns.Count == 0)
+            if (anime[listBox1.SelectedIndex].animationPatterns.Count == 1)
             {
-                MessageBox.Show("已经没有可以删除的啦！");
+                MessageBox.Show("不允许删除最后一帧");
                 return;
             }
             anime[listBox1.SelectedIndex].animationPatterns.RemoveAt(listBox2.SelectedIndex);
@@ -181,14 +175,14 @@ namespace AnimationDesigner
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            anime.Add(new Animation("undefined", new List<string>(), "undefined", 0));
+            anime.Add(new Animation("undefined", new List<string> { "blank" }, "undefined", 0));
             refreshList1();
         }
         private void button8_Click(object sender, EventArgs e)
         {
             if (anime.Count == 1)
             {
-                MessageBox.Show("不允许删除最后剩余的动画！");
+                MessageBox.Show("不允许删除最后剩余的动画");
                 return;
             }
             anime.RemoveAt(listBox1.SelectedIndex);
@@ -266,6 +260,10 @@ namespace AnimationDesigner
                 data = data + "SETime:" + ani.SETime.ToString() + "\n";
                 System.IO.File.WriteAllText(file + @"animation_" + idx.ToString() + ".dat", data);
                 idx++;
+            }
+            while (File.Exists(file + @"animation_" + idx.ToString() + ".dat"))
+            {
+                System.IO.File.Delete(file + @"animation_" + (idx++).ToString() + ".dat");
             }
             MessageBox.Show("保存成功！");
             return;
