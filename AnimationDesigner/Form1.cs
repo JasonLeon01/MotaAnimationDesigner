@@ -26,7 +26,7 @@ namespace AnimationDesigner
         private void loadAnimation()
         {
             int idx = 0;
-            string path = Application.StartupPath + @"data\animation\";
+            string path = Application.StartupPath + @"..\data\animation\";
             while (File.Exists(path + @"animation_" + idx.ToString() + ".dat"))
             {
                 string file = @"animation_" + idx.ToString() + ".dat";
@@ -50,7 +50,7 @@ namespace AnimationDesigner
             {
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"graphics\animation\" + anime[listBox1.SelectedIndex].animationPatterns[nowid]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[listBox1.SelectedIndex].animationPatterns[nowid]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -94,7 +94,7 @@ namespace AnimationDesigner
                 listBox2.SelectedIndex = 0;
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"graphics\animation\" + anime[0].animationPatterns[0]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[0].animationPatterns[0]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -140,7 +140,7 @@ namespace AnimationDesigner
             //创建对象
             OpenFileDialog ofg = new OpenFileDialog();
             //设置默认打开路径
-            ofg.InitialDirectory = Application.StartupPath + @"sound";
+            ofg.InitialDirectory = Application.StartupPath + @"..\sound";
             //设置打开标题、后缀
             ofg.Title = "请选择导入音频文件";
             ofg.Filter = "wav文件|*.wav|ogg文件|*.ogg|vorbis文件|*.vorbis|flac文件|*.flac";
@@ -197,7 +197,7 @@ namespace AnimationDesigner
             //创建对象
             OpenFileDialog ofg = new OpenFileDialog();
             //设置默认打开路径
-            ofg.InitialDirectory = Application.StartupPath + @"graphics\animation";
+            ofg.InitialDirectory = Application.StartupPath + @"..\graphics\animation";
             //设置打开标题、后缀
             ofg.Title = "请选择导入动画文件";
             ofg.Filter = "png文件|*.png";
@@ -217,7 +217,7 @@ namespace AnimationDesigner
         private async void button4_Click(object sender, EventArgs e)
         {
             bool banned = false;
-            string path = Application.StartupPath + @"sound/" + anime[listBox1.SelectedIndex].SEFile;
+            string path = Application.StartupPath + @"..\sound\" + anime[listBox1.SelectedIndex].SEFile;
             IWavePlayer waveOutDevice = new WaveOut();
             WaveStream readerStream = null;
             if (anime[listBox1.SelectedIndex].SEFile.Split('.')[1] == "ogg")
@@ -251,7 +251,7 @@ namespace AnimationDesigner
         private void button2_Click(object sender, EventArgs e)
         {
             int idx = 0;
-            string file = Application.StartupPath + @"data\animation\";
+            string file = Application.StartupPath + @"..\data\animation\";
             foreach (Animation ani in anime)
             {
                 string data = "[animation]\n";
