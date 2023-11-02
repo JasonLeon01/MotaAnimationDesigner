@@ -134,6 +134,7 @@
             pictureBox1.Location = new Point(225, 72);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(300, 300);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
             // 
@@ -244,7 +245,8 @@
             // 
             // Form1
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(620, 450);
             Controls.Add(button8);
             Controls.Add(button7);
