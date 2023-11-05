@@ -140,7 +140,7 @@ namespace AnimationDesigner
             //创建对象
             OpenFileDialog ofg = new OpenFileDialog();
             //设置默认打开路径
-            ofg.InitialDirectory = Application.StartupPath + @"..\sound";
+            ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + @"\sound";
             //设置打开标题、后缀
             ofg.Title = "请选择导入音频文件";
             ofg.Filter = "wav文件|*.wav|ogg文件|*.ogg|vorbis文件|*.vorbis|flac文件|*.flac";
