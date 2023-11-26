@@ -3,6 +3,10 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using NAudio.Wave;
+using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using System.Text.Json.Serialization;
 
 namespace AnimationDesigner
 {
@@ -27,14 +31,13 @@ namespace AnimationDesigner
         {
             int idx = 0;
             string path = Application.StartupPath + @"..\data\animation\";
-            while (File.Exists(path + @"animation_" + idx.ToString() + ".dat"))
+            while (File.Exists(path + @"animation_" + idx.ToString() + ".json"))
             {
-                string file = @"animation_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText(path + file);
-                string[] data = datatext.Split(Environment.NewLine.ToCharArray());
-                data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
-                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + data[1].Split(':')[1]);
-                anime.Add(new Animation(data[1].Split(':')[1], new List<string>(data[2].Split(':')[1].Split(',')), data[3].Split(':')[1], int.Parse(data[4].Split(':')[1])));
+                string file = @"animation_" + idx.ToString() + ".json";
+                string jsonstr = System.IO.File.ReadAllText(path + file);
+                Animation tempani = JsonSerializer.Deserialize<Animation>(jsonstr);
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + tempani.name);
+                anime.Add(tempani);
                 ++idx;
             }
             if (anime.Count == 0)
@@ -46,11 +49,11 @@ namespace AnimationDesigner
         }
         private void drawAnimation(int nowid)
         {
-            if (anime[listBox1.SelectedIndex].animationPatterns[nowid] != "blank")
+            if (anime[listBox1.SelectedIndex].patterns[nowid] != "blank")
             {
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[listBox1.SelectedIndex].animationPatterns[nowid]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[listBox1.SelectedIndex].patterns[nowid]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -65,7 +68,7 @@ namespace AnimationDesigner
             int idx = 0;
             foreach (Animation ani in anime)
             {
-                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + ani.animationName);
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + ani.name);
                 ++idx;
             }
             listBox1.SelectedIndex = list1Index;
@@ -73,7 +76,7 @@ namespace AnimationDesigner
         private void refreshList2()
         {
             listBox2.Items.Clear();
-            foreach (string str in anime[listBox1.SelectedIndex].animationPatterns)
+            foreach (string str in anime[listBox1.SelectedIndex].patterns)
                 listBox2.Items.Add(str);
             listBox2.SelectedIndex = list2Index;
         }
@@ -81,20 +84,20 @@ namespace AnimationDesigner
         {
             loadAnimation();
             listBox1.SelectedIndex = 0;
-            textBox1.Text = anime[0].animationName;
+            textBox1.Text = anime[0].name;
             label5.Text = anime[0].SEFile;
             label5.Refresh();
             textBox2.Text = anime[0].SETime.ToString();
             listBox2.Items.Clear();
-            foreach (string str in anime[0].animationPatterns)
+            foreach (string str in anime[0].patterns)
                 listBox2.Items.Add(str);
 
-            if (anime[0].animationPatterns.Count > 0)
+            if (anime[0].patterns.Count > 0)
             {
                 listBox2.SelectedIndex = 0;
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[0].animationPatterns[0]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[0].patterns[0]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -108,7 +111,7 @@ namespace AnimationDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            anime[listBox1.SelectedIndex].animationName = textBox1.Text;
+            anime[listBox1.SelectedIndex].name = textBox1.Text;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -118,12 +121,12 @@ namespace AnimationDesigner
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             list1Index = listBox1.SelectedIndex;
-            textBox1.Text = anime[listBox1.SelectedIndex].animationName;
+            textBox1.Text = anime[listBox1.SelectedIndex].name;
             label5.Text = anime[listBox1.SelectedIndex].SEFile;
             label5.Refresh();
             textBox2.Text = anime[listBox1.SelectedIndex].SETime.ToString();
             listBox2.Items.Clear();
-            foreach (string str in anime[listBox1.SelectedIndex].animationPatterns)
+            foreach (string str in anime[listBox1.SelectedIndex].patterns)
                 listBox2.Items.Add(str);
             listBox2.SelectedIndex = 0;
             list2Index = 0;
@@ -159,18 +162,18 @@ namespace AnimationDesigner
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            anime[listBox1.SelectedIndex].animationPatterns.Insert(listBox2.SelectedIndex + 1, "blank");
+            anime[listBox1.SelectedIndex].patterns.Insert(listBox2.SelectedIndex + 1, "blank");
             refreshList2();
         }
         private void button7_Click(object sender, EventArgs e)
         {
-            if (anime[listBox1.SelectedIndex].animationPatterns.Count == 1)
+            if (anime[listBox1.SelectedIndex].patterns.Count == 1)
             {
                 MessageBox.Show("不允许删除最后一帧");
                 return;
             }
-            anime[listBox1.SelectedIndex].animationPatterns.RemoveAt(listBox2.SelectedIndex);
-            if (list2Index >= anime[listBox1.SelectedIndex].animationPatterns.Count) list2Index = anime[listBox1.SelectedIndex].animationPatterns.Count - 1;
+            anime[listBox1.SelectedIndex].patterns.RemoveAt(listBox2.SelectedIndex);
+            if (list2Index >= anime[listBox1.SelectedIndex].patterns.Count) list2Index = anime[listBox1.SelectedIndex].patterns.Count - 1;
             refreshList2();
             drawAnimation(listBox2.SelectedIndex);
         }
@@ -207,7 +210,7 @@ namespace AnimationDesigner
             {
                 //得到打开的文件路径（包括文件名）
                 string[] names = ofg.FileName.ToString().Split('\\');
-                anime[listBox1.SelectedIndex].animationPatterns[listBox2.SelectedIndex] = names[names.Length - 1];
+                anime[listBox1.SelectedIndex].patterns[listBox2.SelectedIndex] = names[names.Length - 1];
                 refreshList2();
                 drawAnimation(listBox2.SelectedIndex);
             }
@@ -236,7 +239,7 @@ namespace AnimationDesigner
                 banned = true;
                 MessageBox.Show("抱歉，C#暂不支持该类型文件的播放，本次播放只能静音");
             }
-            for (int i = 0; i < anime[listBox1.SelectedIndex].animationPatterns.Count; ++i)
+            for (int i = 0; i < anime[listBox1.SelectedIndex].patterns.Count; ++i)
             {
                 drawAnimation(i);
                 if (i == anime[listBox1.SelectedIndex].SETime && !banned)
@@ -254,17 +257,19 @@ namespace AnimationDesigner
             string file = Application.StartupPath + @"..\data\animation\";
             foreach (Animation ani in anime)
             {
-                string data = "[animation]\n";
-                data = data + "name:" + ani.animationName + "\n";
-                data = data + "pattern:" + string.Join(",", ani.animationPatterns) + "\n";
-                data = data + "SEFile:" + ani.SEFile + "\n";
-                data = data + "SETime:" + ani.SETime.ToString() + "\n";
-                System.IO.File.WriteAllText(file + @"animation_" + idx.ToString() + ".dat", data);
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                    WriteIndented = true
+                };
+                string jsonstr = JsonSerializer.Serialize(ani, options);
+                System.IO.File.WriteAllText(file + @"animation_" + idx.ToString() + ".json", jsonstr);
                 idx++;
             }
-            while (File.Exists(file + @"animation_" + idx.ToString() + ".dat"))
+            while (File.Exists(file + @"animation_" + idx.ToString() + ".json"))
             {
-                System.IO.File.Delete(file + @"animation_" + (idx++).ToString() + ".dat");
+                System.IO.File.Delete(file + @"animation_" + (idx++).ToString() + ".json");
             }
             MessageBox.Show("保存成功！");
             return;
@@ -274,21 +279,22 @@ namespace AnimationDesigner
 
 class Animation
 {
-    public string animationName, SEFile;
-    public List<string> animationPatterns;
-    public int SETime;
+    public string name { get; set; }
+    public string SEFile { get; set; }
+    public List<string> patterns { get; set; }
+    public int SETime { get; set; }
     public Animation()
     {
-        animationName = "";
-        animationPatterns = new List<string>();
+        name = "";
+        patterns = new List<string>();
         SEFile = "";
         SETime = 0;
     }
-    public Animation(string animationName, List<string> animationPatterns, string SEFile, int SETime)
+    public Animation(string name, List<string> patterns, string SEFile, int SETime)
     {
-        this.animationName = animationName;
+        this.name = name;
         this.SEFile = SEFile;
-        this.animationPatterns = animationPatterns;
+        this.patterns = patterns;
         this.SETime = SETime;
     }
 }

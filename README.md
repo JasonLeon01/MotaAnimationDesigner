@@ -1,5 +1,6 @@
 # MotaAnimationDesigner
-A animation designer for mota games
+
+An animation designer for mota games
 
 Sample:
 
