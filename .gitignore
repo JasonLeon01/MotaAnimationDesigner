@@ -1,3 +1,4 @@
 .vs
-MotaAnimationDesigner
-MotaAnimationDesigner.zip
+AnimationDesigner/bin/
+AnimationDesigner/obj/
+AnimationDesigner/Properties/
