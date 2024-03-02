@@ -53,7 +53,7 @@ namespace AnimationDesigner
             {
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[listBox1.SelectedIndex].patterns[nowid]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\assets\animation\" + anime[listBox1.SelectedIndex].patterns[nowid]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -97,7 +97,7 @@ namespace AnimationDesigner
                 listBox2.SelectedIndex = 0;
                 Bitmap buffer = new Bitmap(300, 300);
                 Graphics g = Graphics.FromImage(buffer);
-                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\animation\" + anime[0].patterns[0]);
+                Image img = Image.FromFile(Application.StartupPath + @"..\assets\animation\" + anime[0].patterns[0]);
                 g.DrawImage(back, new Rectangle(0, 0, 300, 300));
                 g.DrawImage(img, new Rectangle((300 - img.Width) / 2, (300 - img.Height) / 2, img.Width, img.Height));
                 pictureBox1.Image = buffer;
@@ -143,7 +143,7 @@ namespace AnimationDesigner
             //创建对象
             OpenFileDialog ofg = new OpenFileDialog();
             //设置默认打开路径
-            ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + @"\sound";
+            ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + @"\assets\se";
             //设置打开标题、后缀
             ofg.Title = "请选择导入音频文件";
             ofg.Filter = "wav文件|*.wav|ogg文件|*.ogg|vorbis文件|*.vorbis|flac文件|*.flac";
@@ -200,7 +200,7 @@ namespace AnimationDesigner
             //创建对象
             OpenFileDialog ofg = new OpenFileDialog();
             //设置默认打开路径
-            ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + @"\graphics\animation";
+            ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + @"\assets\animation";
             //设置打开标题、后缀
             ofg.Title = "请选择导入动画文件";
             ofg.Filter = "png文件|*.png";
@@ -220,7 +220,7 @@ namespace AnimationDesigner
         private async void button4_Click(object sender, EventArgs e)
         {
             bool banned = false;
-            string path = Application.StartupPath + @"..\sound\" + anime[listBox1.SelectedIndex].SEFile;
+            string path = Application.StartupPath + @"..\assets\se\" + anime[listBox1.SelectedIndex].SEFile;
             IWavePlayer waveOutDevice = new WaveOut();
             WaveStream readerStream = null;
             if (anime[listBox1.SelectedIndex].SEFile.Split('.')[1] == "ogg")
@@ -232,7 +232,6 @@ namespace AnimationDesigner
             {
                 readerStream = new WaveFileReader(path);
                 waveOutDevice.Init(readerStream);
-
             }
             else
             {
@@ -261,7 +260,7 @@ namespace AnimationDesigner
                 {
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                     DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-                    WriteIndented = true
+                    WriteIndented = false
                 };
                 string jsonstr = JsonSerializer.Serialize(ani, options);
                 System.IO.File.WriteAllText(file + @"animation_" + idx.ToString() + ".json", jsonstr);
